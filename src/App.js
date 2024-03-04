@@ -42,6 +42,15 @@ function App() {
         setStatus([]);
         setGameOver(false);
     }
+    const handleHome = (event) => {
+        event.preventDefault();
+        setHomeName(homeName);
+    };
+
+    const handleGuest = (e) => {
+        e.preventDefault();
+        setGuestName(guestName);
+    };
 
     useEffect(() => {
         if (homePoints === 12){
@@ -58,10 +67,10 @@ function App() {
     }, [guestPoints, guestName, status]);
 
     useEffect(() => {
-    if (homePoints === 0 && guestPoints === 0){
-        setGameOver(false);
-    }
-}, [homePoints, guestPoints]);
+        if (homePoints === 0 && guestPoints === 0){
+            setGameOver(false);
+        }
+    }, [homePoints, guestPoints]);
 
     return (
         <div className="App">
@@ -69,6 +78,16 @@ function App() {
                 <h1>Home</h1>
                 <button onClick={HomeThrow} disabled={gameOver}>Throw for {homeName}</button>
                 <div>Home: {homePoints}</div>
+                <form onSubmit={handleHome}>
+                    <label>
+                        Home:
+                        <input
+                            type="text"
+                            value={homeName}
+                            onChange={(e) => setHomeName(e.target.value)}
+                        />
+                    </label>
+                </form>
             </div>
             <div className="center">
                 <div className="image-container"></div>
@@ -78,6 +97,16 @@ function App() {
                 <h1>Guest</h1>
                 <button onClick={GuestThrow} disabled={gameOver}>Throw for {guestName}</button>
                 <div>Guest: {guestPoints}</div>
+                <form onSubmit={handleGuest}>
+                    <label>
+                        Guest:
+                        <input
+                            type="text"
+                            value={guestName}
+                            onChange={(e) => setGuestName(e.target.value)}
+                        />
+                    </label>
+                </form>
             </div>
             <ProgressBar animated variant={"info"} now={homePoints} label={`${homePoints}%`}/>
             <ProgressBar animated variant={"warning"} now={guestPoints} label={`${guestPoints}%`}/>
